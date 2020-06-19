@@ -153,7 +153,7 @@ describe('Singup Controller', () => {
     expect(isValidSpy).toHaveBeenCalledWith(httpResquest.body.email)
   })
 
-  test('Should return 500 if an EmailValidatopr throws', () => {
+  test('Should return 500 if EmailValidatopr throws', () => {
     const { sut, emailValidatorStub } = makeSut()
     jest.spyOn(emailValidatorStub, 'isValid').mockImplementationOnce(() => {
       throw new Error()
@@ -173,9 +173,7 @@ describe('Singup Controller', () => {
 
   test('Should call AddAccount with correct values', () => {
     const { sut, addAccountStud } = makeSut()
-
     const addSpy = jest.spyOn(addAccountStud, 'add')
-
     const httpResquest = {
       body: {
         name: 'any_name',
@@ -190,5 +188,23 @@ describe('Singup Controller', () => {
       email: 'any_email@email.com',
       password: 'any_password'
     })
+  })
+
+  test('Should return 500 if AddAccount  throws', () => {
+    const { sut, addAccountStud } = makeSut()
+    jest.spyOn(addAccountStud, 'add').mockImplementationOnce(() => {
+      throw new Error()
+    })
+    const httpResquest = {
+      body: {
+        name: 'any_name',
+        email: 'any_email@email.com',
+        password: 'any_password',
+        passwordConfirmation: 'any_password'
+      }
+    }
+    const htttpResponse = sut.handle(httpResquest)
+    expect(htttpResponse.statusCode).toBe(500)
+    expect(htttpResponse.body).toEqual(new ServerError())
   })
 })
