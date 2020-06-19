@@ -7,7 +7,7 @@
     "@typescript-eslint/strict-boolean-expressions": "off",
     "@types-eslint/consistent-type-definitions": "off",
     "@types-eslint/comma-spacing": "off",
-    "@types-eslint/return-await": "off",
+    "@typescript-eslint/return-await": "off",
     "@types-eslint/method-signature-style": "off"
 
   }
